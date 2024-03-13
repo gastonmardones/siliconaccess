@@ -1,0 +1,42 @@
+version: "3.9"
+
+services:
+  silicon_access:
+    build: .
+    volumes:
+      - .:/app
+
+    ports:
+      - "8000:8000"
+    container_name: silicon_access
+    image: silicon_access:1
+    environment:
+      - DB_USER=[USER]
+      - DB_PASSWORD=[PASSWORD]
+      - DB_NAME=[NAME]
+      - DB_PORT=5432
+      - DB_HOST=db
+    depends_on:
+      - db
+    networks:
+      - siliconaccess
+
+  db:
+    container_name: db
+    image: postgres:16
+    environment:
+      - POSTGRES_DB=postgres
+      - POSTGRES_USER=[USER]
+      - POSTGRES_PASSWORD=[PASSWORD]
+    ports:
+      - "5432:5432"
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+
+    networks:
+      - siliconaccess
+volumes:
+  pgdata: {}
+
+networks:
+  siliconaccess:
