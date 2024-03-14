@@ -1,13 +1,12 @@
-from django.contrib import admin
-from django.urls import path, include
-
-from api import views
 from rest_framework import routers
+
+from api.views import UserViewSet, VehicleViewSet, VehicleTypeViewSet, VehicleRecordViewSet
 
 router = routers.DefaultRouter()
 
-router.register('users', views.UserViewSet)
-router.register('vehicles', views.VehicleViewSet)
-router.register('vehicle_types', views.VehicleTypeViewSet)
+router.register('users', UserViewSet)
+router.register('vehicle', VehicleViewSet)
+router.register('vehicle_type', VehicleTypeViewSet)
+router.register(r'vehicle_record', VehicleRecordViewSet)
 
 urlpatterns = router.urls

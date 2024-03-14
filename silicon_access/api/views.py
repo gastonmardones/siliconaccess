@@ -6,8 +6,8 @@ from rest_framework.response import Response
 from rest_framework.views import APIView
 
 from api.authentication import Authentication
-from api.models import Vehicle, VehicleType
-from api.serializers import VehicleSerializer, VehicleTypeSerializer, UserSerializer
+from api.models import Vehicle, VehicleType, VehicleRecord
+from api.serializers import VehicleSerializer, VehicleTypeSerializer, UserSerializer, VehicleRecordSerializer
 
 
 class Login(ObtainAuthToken):
@@ -82,13 +82,13 @@ class VehicleViewSet(Authentication, viewsets.ModelViewSet):
     """
     API de Vehículos
 
-    :param Marca:str
-    :param Modelo:str
-    :param Color:str
-    :param Patente:str
-    :param Aseguradora:str
-    :param Expiración de Poliza:str
-    :param Tipo de vehículo:ID del tipo de vehículo (VehicleType)
+    :param brand:str
+    :param model:str
+    :param color:str
+    :param license:str
+    :param insurance:str
+    :param insurance_expiration:date
+    :param type:VehicleType
     """
 
     queryset = Vehicle.objects.all()
@@ -99,8 +99,20 @@ class VehicleTypeViewSet(Authentication, viewsets.ModelViewSet):
     """
     API de tipos de vehículos
 
-    param: Nombre:str
+    param: name:str
     """
 
     queryset = VehicleType.objects.all()
     serializer_class = VehicleTypeSerializer
+
+
+class VehicleRecordViewSet(Authentication, viewsets.ModelViewSet):
+    """
+    API de Ingreso y Egreso de Vehículos
+
+    :param vehicle:Vehicle
+    :param entry_datetime:(auto_created)
+    :param exit_datetime:datetime
+    """
+    queryset = VehicleRecord.objects.all()
+    serializer_class = VehicleRecordSerializer
