@@ -99,7 +99,7 @@ class VehicleTypeViewSet(Authentication, viewsets.ModelViewSet):
     """
     API de tipos de vehículos
 
-    param: name:str
+    :param name:str
     """
 
     queryset = VehicleType.objects.all()
